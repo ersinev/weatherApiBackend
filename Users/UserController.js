@@ -1,4 +1,6 @@
 const express =require('express')
+const { UserModel } = require('../mongoose/model/UserModel');
+const userRouter = express.Router()
 userRouter.post("/", async (req, res) => {
     const { email, password, } = req.body;
     UserModel.findOne({ email: email }, (errs, doc) => {
