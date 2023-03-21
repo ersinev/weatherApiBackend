@@ -2,20 +2,25 @@ const express =require('express')
 const { UserModel } = require('../mongoose/model/UserModel');
 const userRouter = express.Router()
 userRouter.post("/", async (req, res) => {
-    const { email, password, } = req.body;
-    UserModel.findOne({ email: email }, (errs, doc) => {
-      if (doc != null && password == doc.password) {
-        res.send({
-          isSuccess: true,
-          user: { username: doc.name, email: doc.email },
-        });
-      } else {
-        res.send({ isSuccess: false, message: "User not found" });
-      }
-    });
-  });
+  const { email, password } = req.body;
+
+  try {
+    const doc = await UserModel.findOne({ email: email });
+    if (doc != null && password == doc.password) {
+      res.send({
+        isSuccess: true,
+        user: { firstname: doc.firstname, email: doc.email },
+      });
+    } else {
+      res.send({ isSuccess: false, message: "User not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Server error" });
+  }
+});
   
-  userRouter.post("/singin", async (req, res) => {
+  userRouter.post("/singup", async (req, res) => {
     const { email, password, firstname, lastname } = req.body;
     UserModel.findOne({ email: email }, async (errs, doc) => {
       if (doc != null) {
@@ -25,7 +30,8 @@ userRouter.post("/", async (req, res) => {
         });
       } else {
         const doc = new UserModel({
-          name: name,
+          firstname: firstname,
+          lastname: lastname,
           password: password,
           email: email,
         });
