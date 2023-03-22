@@ -20,27 +20,27 @@ userRouter.post("/", async (req, res) => {
   }
 });
   
-  // userRouter.post("/singup", async (req, res) => {
-  //   const { email, password, firstname, lastname } = req.body;
-  //   UserModel.findOne({ email: email }, async (errs, doc) => {
-  //     if (doc != null) {
-  //       res.send({
-  //         isSuccess: false,
-  //         message: "This email is already existing",
-  //       });
-  //     } else {
-  //       const doc = new UserModel({
-  //         firstname: firstname,
-  //         lastname: lastname,
-  //         password: password,
-  //         email: email,
-  //       });
+  userRouter.post("/singup", async (req, res) => {
+    const { email, password, firstname, lastname } = req.body;
+    UserModel.findOne({ email: email }, async (errs, doc) => {
+      if (doc != null) {
+        res.send({
+          isSuccess: false,
+          message: "This email is already existing",
+        });
+      } else {
+        const doc = new UserModel({
+          firstname: firstname,
+          lastname: lastname,
+          password: password,
+          email: email,
+        });
   
-  //       await doc.save();
-  //       res.send({ isSuccess: true, message: "registration is successful" });
-  //       console.log("user saved");
-  //     }
-  //   });
-  // });
+        await doc.save();
+        res.send({ isSuccess: true, message: "registration is successful" });
+        console.log("user saved");
+      }
+    });
+  });
   
-  // module.exports = userRouter
+  module.exports = userRouter
