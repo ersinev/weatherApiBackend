@@ -1,24 +1,24 @@
 const express =require('express')
 const { UserModel } = require('../mongoose/model/UserModel');
 const userRouter = express.Router()
-userRouter.post("/", async (req, res) => {
-  const { email, password } = req.body;
+// userRouter.post("/", async (req, res) => {
+//   const { email, password } = req.body;
 
-  try {
-    const doc = await UserModel.findOne({ email: email });
-    if (doc != null && password == doc.password) {
-      res.send({
-        isSuccess: true,
-        user: { firstname: doc.firstname, email: doc.email },
-      });
-    } else {
-      res.send({ isSuccess: false, message: "User not found" });
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).send({ message: "Server error" });
-  }
-});
+//   try {
+//     const doc = await UserModel.findOne({ email: email });
+//     if (doc != null && password == doc.password) {
+//       res.send({
+//         isSuccess: true,
+//         user: { firstname: doc.firstname, email: doc.email },
+//       });
+//     } else {
+//       res.send({ isSuccess: false, message: "User not found" });
+//     }
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send({ message: "Server error" });
+//   }
+// });
   
   userRouter.post("/singup", async (req, res) => {
     const { email, password, firstname, lastname } = req.body;
