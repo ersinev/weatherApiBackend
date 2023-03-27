@@ -6,17 +6,19 @@ const mongoose = require("mongoose");
 const userRouter = require("./Users/UserController");
 
 
-main().catch((err) => console.log(err));
+
 app.use(express.json());
 
-async function main() {
-  await mongoose.connect("mongodb://localhost:27017/weatherApi");
-  console.log("Connected to MongoDB Atlas");
-  
-  
-}
+const uri = 'mongodb://localhost/weatherapi'; // replace with your MongoDB URI
 
-main().catch((err) => console.log(err));
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log('Connected to MongoDB');
+    // Your code here
+  })
+  .catch((error) => {
+    console.error('Error connecting to MongoDB', error);
+  });
 
 app.listen(5000,()=>{
     console.log("server is running on 5000")
