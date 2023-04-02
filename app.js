@@ -9,7 +9,7 @@ const userRouter = require("./Users/UserController");
 
 app.use(express.json());
 
-const uri = 'mongodb://localhost/weatherapi'; // MongoDB URI
+const uri = 'mongodb://localhost/weatherapi'; 
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
